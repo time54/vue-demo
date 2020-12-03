@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <title>vue_component</title>
+  </head>
+  <style>
+    *{margin:0; padding:0;}
+    div{margin-top:10px;}
+    p{margin-left: 10px; font-weight: 500; font-size: 16px;}
+  </style>
+  <body>
+  	<div id="app">
+      <!--1、全局注册组件-->
+      <global-component></global-component>
+      <!--2、局部注册组件-->
+      <local-component></local-component>
+      <!--3、DOM模板解析组件(<ul>,<ol>,<table>,<select>)限制了能被它包裹的元素-->
+      <div><ul><li is="my-row"></li></ul></div>
+      <!--4、父组件向子组件传输数据-->
+      <div>
+        {{explain4}} 
+        <input v-model="msg"/>
+        <parent-tochild v-bind:parent-msg="msg"></parent-tochild>
+      </div>
+      <!--5、子组件向父组件传输数据
+              v-on: 监听子组件increment事件,然后触发父组件incrementTotal事件-->
+      <div>
+        {{explain5}}
+        <div style="padding: 0 20px;">
+          1)在子组件内自定义事件increment<br/>
+          2)在子组件内this.$emit('increment',"子组件向父组件传输的具体数据") 触发事件<br/>
+          3)在父组件引用子组件上监听到子组件自定义事件事件 v-on:increment,调用父组件事件(父组件事件改变父组件的值)
+        </div>
+        <span>total: {{total}}</span>
+        <child-toparent v-on:increment="incrementTotal"></child-toparent>
+        <child-toparent v-on:increment="incrementTotal"></child-toparent>
+      </div> 
+    </div>
+  </body>
+  <script src="vue.js"></script>
+  <script>
+    /*1、全局注册组件*/
+    Vue.component('global-component',{
+
+      template: '<div>1、全局注册组件: global custom component！</div>'
+    });
+    
+    /*2、局部注册组件*/
+    var local = {
+      template: "<div>2、局部注册组件：local custom component!</div>",
+    }
+
+    /*3、DOM模板解析组件(<ul>,<ol>,<table>,<select>)限制了能被它包裹的元素*/
+    var domPars ={template: "<tr>3、DOM模板解析组件(ul,ol,table,select)限制了能被它包裹的元素</tr>"};
+
+    /*4、父组件向子组件传输数据*/
+    var parentTochild = {
+      props:['parentMsg'],
+      template: '<div style="padding-left: 224px;">{{parentMsg}}</div>',
+    };
+
+    /*5、子组件向父组件传输数据*/
+    var childToparent = {
+      /*在组件中,data必须是一个函数*/
+      data: function(){
+        return {counter:0}
+      },
+      template: '<button v-on:click="increment">{{counter}}</button>',
+      methods:{
+        //子组件自定义事件
+        increment: function(){
+          this.counter += 1;
+          this.$emit('increment',"子组件向父组件传输的具体数据");//触发increment事件
+        }
+      }
+    };
+
+    /*创建根实例：确保在初始化根实例之前注册组件*/
+    new Vue({
+      el: "#app",
+      data:{
+        explain4: "4、父组件向子组件传输数据：",
+        msg: "Message from parent",
+        explain5: "5、子组件向父组件传输数据：",
+        total: 0 
+      },
+      components:{
+        'local-component': local,
+        'my-row': domPars,
+        'parent-tochild': parentTochild,
+        'child-toparent': childToparent
+      },
+      methods:{
+        incrementTotal:function(msg){
+          this.total += 1;
+          this.explain5 = msg;//子组件向父组件传输的具体数据
+        }
+      }
+    });
+    
+  </script>
+</html>

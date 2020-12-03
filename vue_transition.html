@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <title>vue_transtion</title>
+  </head>
+
+  <body>
+  	<div id="app">
+      <button v-on:click="show=!show">transtion</button>
+      <!--过渡效果-->
+      <transition  name="demo">
+        <div v-if="show">
+           <p>transtion:</p>
+           <p>1.元素进入-->结束状态：enter-->enter-active</p>
+           <p>2.元素离开-->结束状态: leave-->leave-active</p>
+        </div>
+      </transition>
+    </div>
+  </body>
+  <script src="vue.js"></script>
+  <script>
+
+    new Vue({
+      el: "#app",
+      data:{show: true}
+    });
+    
+  </script>
+  <style>
+    *{margin:0; padding:0;}
+    div{margin-top:10px;font-size: 40px;}
+    p{margin-left: 10px; font-weight: 500;}
+    /*过渡效果初始状态定义*/
+    .demo-enter,.demo-leave-active{
+      opacity: 0;
+      font-size: 12px;/*原始样式不能使用内联样式*/
+    }
+    .demo-enter-active,.demo-leave-active{
+      transition: all 1s;
+    }
+
+  </style>
+</html>
