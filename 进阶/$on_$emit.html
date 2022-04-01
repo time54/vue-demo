@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <title>$on_$emit</title>
+    <script src="vue.js"></script>
+  </head>
+
+  <body>
+  	<div id="app">
+        <button @click="boost">触发事件</button>
+        <button @click="loop">定时器</button>
+    </div>
+  </body>
+  
+  <script>
+    new Vue({
+      el: "#app",
+      data() {
+         return {
+             message: 'hello vue'
+         } 
+      },
+      methods: {
+        handleEvents(e) {
+          console.log(this.message, e);
+        },
+        boost() {
+            /*事件消费
+            * vm.$emit(eventName, […args])
+            * eventName: string
+            * […args]: 方法参数
+            */ 
+            this.$emit('my_events', 'my params');
+            this.$emit('my_events2', 'my params2');
+        },
+        loop() {
+          const timer = setInterval(()=>{
+            console.log('timer');
+          },1000);
+          this.$once('hook:beforeDestory',()=>{
+            clearInterval(timer);
+            console.log('hook:beforeDestory');
+          });
+        }
+      },
+      created() {
+         /*事件定义【可以给不同的自定义事件绑定同一个方法】：将方法加入到 vue 实例上
+         * vm.$on(event, callback)
+         * event: string | Array<string>
+         * callback: Function
+         */
+        //  this.$on('my_events', this.handleEvents);
+        this.$on(['my_events', 'my_events2'], this.handleEvents);
+      },
+    });
+
+  </script>
+  <style>
+    *{margin:0; padding:0;}
+    div{margin-top:10px;font-size: 20px;}
+    p{margin-left: 10px; font-weight: 500;}
+
+  </style>
+</html>
