@@ -19,7 +19,7 @@
       el: "#app",
       data() {
          return {
-             message: 'hello vue'
+            message: 'hello vue'
          } 
       },
       methods: {
@@ -39,6 +39,7 @@
           const timer = setInterval(()=>{
             console.log('timer');
           },1000);
+          // 组件销毁时执行
           this.$once('hook:beforeDestory',()=>{
             clearInterval(timer);
             console.log('hook:beforeDestory');

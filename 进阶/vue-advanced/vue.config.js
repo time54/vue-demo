@@ -27,7 +27,7 @@ module.exports = {
   /*webpack 更细粒度的配置*/
   chainWebpack: config => {
     config.plugin('html').tap(args => {
-      args[0].title = '模拟炒股大赛平台';
+      args[0].title = "vue进阶";
       return args;
     });
     // 解决 Moment 多国语,可以减小30kb左右的打包体积
