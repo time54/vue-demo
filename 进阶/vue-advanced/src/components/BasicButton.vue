@@ -1,9 +1,9 @@
 <template>
-  <div @click="boost">基础按钮</div>
+  <div @click="boost">{{ msg }}</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onUpdated } from "vue";
 
 export default defineComponent({
   name: "BasicButton",
@@ -19,6 +19,9 @@ export default defineComponent({
        */
       context.emit("my-events", "my params");
     };
+    onUpdated(() => {
+      console.log("onUpdated");
+    });
     return {
       boost,
     };

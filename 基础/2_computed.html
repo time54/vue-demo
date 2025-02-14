@@ -1,0 +1,95 @@
+<!--
+ * @Author: taojinchao
+ * @Date: 2022-03-28 20:27:55
+ * @LastEditors: taojinchao
+ * @LastEditTime: 2025-02-13 20:19:15
+ * @Description: 计算属性：计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <title>vue_computed</title>
+  </head>
+  <style>
+    *{margin:0; padding:0;}
+    div{margin-top:10px;}
+    p{margin-left: 10px; font-weight: 500; font-size: 16px;}
+  </style>
+  <body>
+  	<div id="app">
+      <h3>1.计算属性: Computed</h3>
+      <p>Original message: "{{ message }}"</p>
+      <p>Reversed message: "{{ reversedMessage }}"</p>
+    </div>
+    <div id=app2>
+      <h3>2.Computed VS methods</h3>
+      <p>点击按钮后，计算属性不会重新计算，而方法会重新计算</p>
+      <p>computed多次调用的结果:</p>
+      <p>"{{ computedTime }}"</p>
+      <p>"{{ computedTime }}"</p>
+      <p>"{{ computedTime }}"</p>
+      
+      <p>methods多次调用的结果:</p>
+      <p>"{{ methodsTime() }}"</p>
+      <p>"{{ methodsTime() }}"</p>
+      <p>"{{ methodsTime() }}"</p>
+      
+      <!-- 添加一个按钮来更新数据 -->
+      <button @click="updateData">更新数据</button>
+    </div>
+  </body>
+  <script src="vue.js"></script>
+  <script>
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message:"计算属性: Computed!"
+      },
+      computed:{
+        reversedMessage: function(){
+          return this.message.split('').reverse().join('');
+        }
+      } 
+    });
+
+    var app2 = new Vue({
+      el: "#app2",
+      data: {
+        count: 0  // 添加一个数据属性
+      },
+      computed:{
+        computedTime: function(){
+          console.log('computed被调用');
+          var start = new Date().getTime();
+          var sum = 0;
+          // 增加计算量
+          for(var i=0; i<2000000; i++){
+               sum += i + this.count;  // 依赖count数据
+          }
+          var end = new Date().getTime();
+          return (end - start) + "ms";
+        }
+      },
+      methods: {
+        methodsTime: function(){
+          console.log('methods被调用');
+          var start = new Date().getTime();
+          var sum = 0;
+          // 保持相同的计算量
+          for(var i=0; i<2000000; i++){
+               sum += i + this.count;  // 依赖count数据
+          }
+          var end = new Date().getTime();
+          return (end - start) + "ms";
+        },
+        updateData: function() {
+          this.count++;  // 更新数据触发重新计算
+        }
+      }
+    });
+
+  </script>
+</html>

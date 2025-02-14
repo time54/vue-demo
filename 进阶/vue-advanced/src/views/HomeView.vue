@@ -1,3 +1,10 @@
+<!--
+ * @Author: taojinchao
+ * @Date: 2022-04-01 16:23:01
+ * @LastEditors: taojinchao
+ * @LastEditTime: 2025-02-12 16:45:48
+ * @Description: 
+-->
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
@@ -6,13 +13,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "../components/HelloWorld.vue"; // @ is an alias to /src
+  import { defineComponent } from "vue";
+  import HelloWorld from "../components/HelloWorld.vue";
 
-export default defineComponent({
-  name: "HomeView",
-  components: {
-    HelloWorld,
-  },
-});
+  export default defineComponent({
+    name: "HomeView",
+    components: {
+      HelloWorld,
+    },
+  });
 </script>

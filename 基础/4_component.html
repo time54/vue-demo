@@ -14,16 +14,20 @@
   	<div id="app">
       <!--1、全局注册组件-->
       <global-component></global-component>
+
       <!--2、局部注册组件-->
       <local-component></local-component>
+
       <!--3、DOM模板解析组件(<ul>,<ol>,<table>,<select>)限制了能被它包裹的元素-->
       <div><ul><li is="my-row"></li></ul></div>
+
       <!--4、父组件向子组件传输数据-->
       <div>
         {{explain4}} 
         <input v-model="msg"/>
         <parent-tochild v-bind:parent-msg="msg"></parent-tochild>
       </div>
+
       <!--5、子组件向父组件传输数据
               v-on: 监听子组件increment事件,然后触发父组件incrementTotal事件-->
       <div>
@@ -36,7 +40,7 @@
         <span>total: {{total}}</span>
         <child-toparent v-on:increment="incrementTotal"></child-toparent>
         <child-toparent v-on:increment="incrementTotal"></child-toparent>
-      </div> 
+      </div>
     </div>
   </body>
   <script src="vue.js"></script>
@@ -77,7 +81,7 @@
       }
     };
 
-    /*创建根实例：确保在初始化根实例之前注册组件*/
+    /* 创建根实例：确保在初始化根实例之前注册组件 */
     new Vue({
       el: "#app",
       data:{
@@ -93,9 +97,9 @@
         'child-toparent': childToparent
       },
       methods:{
-        incrementTotal:function(msg){
+        incrementTotal:function(msg) {
           this.total += 1;
-          this.explain5 = msg;//子组件向父组件传输的具体数据
+          this.explain5 = msg; //子组件向父组件传输的具体数据
         }
       }
     });
