@@ -2,7 +2,7 @@
  * @Author: taojinchao
  * @Date: 2022-04-01 16:23:01
  * @LastEditors: taojinchao
- * @LastEditTime: 2025-02-13 14:47:05
+ * @LastEditTime: 2025-02-19 15:10:43
  * @Description: 
  */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
@@ -31,6 +31,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "directivedemo",
     component: () =>
       import(/* webpackChunkName: "自定义指令" */ "../views/DirectiveDemo.vue"),
+  },
+  {
+    path: "/vuexdemo",
+    name: "vuexdemo",
+    component: () =>
+      import(/* webpackChunkName: "vuex" */ "../views/VuexDemo.vue"),
   },
 ];
 
